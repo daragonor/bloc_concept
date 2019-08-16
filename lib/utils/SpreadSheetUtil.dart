@@ -110,7 +110,7 @@ Expanded customHeader(String text) {
           style:
               TextStyle(
                 fontFamily: 'Montserrat', 
-                fontSize: hp(1.5),
+                fontSize: hp(30*100/1080),
                 fontWeight: FontWeight.w600),
         ),
       ),

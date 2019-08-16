@@ -24,17 +24,17 @@ class CustomSearchBox extends StatelessWidget {
               child: Icon(
                 Icons.search,
                 color: Color(0xFF47525D),
-                size: hp(4),
+                size: hp(22*100/1080),
               ),
             ),
             Expanded(
               child: TextField(
-                decoration: InputDecoration(
+                decoration: InputDecoration.collapsed(
                   border: InputBorder.none,
                   hintText: "Search...",
                   hintStyle: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontSize: hp(2.4)
+                    fontSize: hp(22*100/1080)
                   )
                 ),
               ),

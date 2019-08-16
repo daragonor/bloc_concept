@@ -36,12 +36,12 @@ class _GuestScreenState extends State<GuestScreen> {
                     padding: EdgeInsets.all(8.0),
                     child: Row(
                       children: <Widget>[
-                        customTitle("GUESTBOOK", 4.42),
+                        customTitle("GUESTBOOK", 58, spacing: true),
                       ],
                     ),
                   ),
                   Container(
-                    height: hp(7.0),
+                    height: hp(60 * 100 / 1080),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
@@ -56,7 +56,13 @@ class _GuestScreenState extends State<GuestScreen> {
                             //color: Colors.whte,
                             shape: RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(7.0)),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return GuestBookAddEdit(true);
+                                  });
+                            },
                             child: Text(
                               "+ ADD NEW GUEST",
                               style: TextStyle(
@@ -102,7 +108,7 @@ class _GuestScreenState extends State<GuestScreen> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return GuestBookAddEdit();
+                              return GuestBookAddEdit(false);
                             });
                       });
                     },
