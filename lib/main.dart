@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 /* import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:async';
 import 'package:http/http.dart'as http; */
@@ -25,26 +26,20 @@ List<Widget> _tiles = const <Widget>[
 ]; */
 
 void main() {
-  
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: GuestScreen()
-  ));
+  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: GuestScreen()));
 }
-/* 
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Orientation Demo';
-
-    return MaterialApp(
-      title: appTitle,
-      debugShowCheckedModeBanner: false,
-      home: OrientationList()
-    );
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+    return MaterialApp(debugShowCheckedModeBanner: false, home: GuestScreen());
   }
 }
-
+/*
 class OrientationList extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => OrientationListState();

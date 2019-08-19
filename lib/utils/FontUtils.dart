@@ -34,6 +34,12 @@ Widget fieldTitle(String text) {
     style: customTextStyle(22, Colors.black)
   );
 }
+Widget customText(String text, Color color, double size) {
+  return Text(
+    "$text",
+    style: customTextStyle(size, color)
+  );
+}
 
 enum Weight {normal, bold}
 TextStyle customTextStyle(double percentage, Color color, [Weight weight]) {

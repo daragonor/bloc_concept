@@ -81,7 +81,7 @@ class GuestCell extends StatelessWidget {
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: hp(1.4),
-                  color: selected ?  ColorUtils.spreadstext : Colors.white,
+                  color: selected ?  ColorUtils.spreadsText : Colors.white,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

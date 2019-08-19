@@ -6,7 +6,7 @@ import 'package:bloc_concept/utils/FormUtils.dart';
 import 'package:bloc_concept/utils/SpreadSheetUtil.dart';
 
 class GuestBookAddEdit extends StatefulWidget {
-  bool isNew;
+  final bool isNew;
   GuestBookAddEdit(this.isNew, {Key key}) : super(key: key);
 
   _GuestBookAddEdit createState() => _GuestBookAddEdit(isNew);
@@ -14,6 +14,11 @@ class GuestBookAddEdit extends StatefulWidget {
 
 class _GuestBookAddEdit extends State<GuestBookAddEdit> {
   bool isNew;
+  String birth = "MM / DD / YY";
+  String anniv = "MM / DD / YY";
+  bool birthChanged = false;
+  bool annivChanged = false;
+
   _GuestBookAddEdit(this.isNew);
   final border = 5.0;
   @override
@@ -29,7 +34,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                 Container(
                   height: hp(80 * 100 / 1080),
                   decoration: BoxDecoration(
-                      color: ColorUtils.dialogheader,
+                      color: ColorUtils.dialogHeader,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(border),
                           topRight: Radius.circular(border))),
@@ -203,19 +208,12 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                             ],
                                           )
                                         : Container(
-                                            height: hp(238.5 * 100 / 1080),
-                                            padding: EdgeInsets.only(bottom: 48),
+                                            height: hp(190 * 100 / 1080),
+                                            padding: EdgeInsets.only(
+                                                bottom: hp(32 * 100 / 1080),
+                                                right: 2.0),
                                             child: Row(
                                               children: <Widget>[
-                                                AspectRatio(
-                                                  aspectRatio: 220 / 190,
-                                                  child: Container(
-                                                    height:
-                                                        hp(190 * 100 / 1080),
-                                                    child: Center(
-                                                        child: addressButton()),
-                                                  ),
-                                                ),
                                                 Expanded(
                                                   child: ListView.builder(
                                                     scrollDirection:
@@ -225,7 +223,9 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                     itemBuilder:
                                                         (BuildContext context,
                                                             int index) {
-                                                      return addressCell();
+                                                      return index == 0
+                                                          ? addressButton()
+                                                          : addressInfo();
                                                     },
                                                   ),
                                                 ),
@@ -251,15 +251,34 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                     Row(
                                       children: <Widget>[
                                         Expanded(
-                                            child: customInputDatePicker(
-                                                "Date of Birth", context)),
+                                          child: customInputDatePicker(
+                                              "Date of Birth",
+                                              birth,
+                                              birthChanged,
+                                              context, (date) {
+                                            setState(() {
+                                              birthChanged = true;
+                                              birth =
+                                                  "${date.day} / ${date.month} / ${date.year}";
+                                            });
+                                          }),
+                                        ),
                                         SizedBox(
                                           width: wp(47 * 100 / 1920),
                                         ),
                                         Expanded(
                                           child: customInputDatePicker(
-                                              "Anniversary", context),
-                                        )
+                                              "Anniversary",
+                                              anniv,
+                                              annivChanged,
+                                              context, (date) {
+                                            setState(() {
+                                              annivChanged = true;
+                                              anniv =
+                                                  "${date.day} / ${date.month} / ${date.year}";
+                                            });
+                                          }),
+                                        ),
                                       ],
                                     ),
                                     SizedBox(
