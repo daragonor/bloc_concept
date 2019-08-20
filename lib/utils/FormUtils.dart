@@ -39,13 +39,18 @@ Widget customInput({String title, Widget input, double height = 61.0}) {
 
 Widget customInputDetailHint(
     Function(String) onTap, String title, String detail,
-    [double height = 61]) {
-  return customInput(
-      title: title, input: customTextField(onTap, "$detail"), height: height);
+    {String defaultText, double height = 61}) {
+  final field = defaultText != ""
+      ? customTextField(onTap, "$detail", defaultText)
+      : customTextField(onTap, "$detail");
+
+      
+  return customInput(title: title, input: field, height: height);
 }
 
-Widget customInputSameHint(Function(dynamic) onTap, String title) {
-  return customInputDetailHint(onTap, title, title);
+Widget customInputSameHint(Function(dynamic) onTap, String title,
+    {String defaultText}) {
+  return customInputDetailHint(onTap, title, title, defaultText: defaultText);
 }
 
 Widget customInputPhoneNumber(

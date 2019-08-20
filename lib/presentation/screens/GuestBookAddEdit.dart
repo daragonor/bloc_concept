@@ -7,26 +7,30 @@ import 'package:bloc_concept/utils/FormUtils.dart';
 import 'package:bloc_concept/utils/SpreadSheetUtil.dart';
 import 'package:bloc_concept/data/models/Guest.dart';
 import 'package:bloc_concept/data/repository/GuestRepository.dart';
+import 'dart:convert';
 
 class GuestBookAddEdit extends StatefulWidget {
-  final bool isNew;
-  GuestBookAddEdit(this.isNew, {Key key}) : super(key: key);
+  final guest;
+  GuestBookAddEdit([this.guest, Key key]) : super(key: key);
 
-  _GuestBookAddEdit createState() => _GuestBookAddEdit(isNew);
+  _GuestBookAddEdit createState() => _GuestBookAddEdit(guest);
 }
 
 class _GuestBookAddEdit extends State<GuestBookAddEdit> {
-  bool isNew;
   String birth = "MM / DD / YY";
   String anniv = "MM / DD / YY";
   bool birthChanged = false;
   bool annivChanged = false;
-  Guest guest = Guest();
-  Address address = Address();
-  _GuestBookAddEdit(this.isNew);
+  Guest guest;
+  Address address;
+  _GuestBookAddEdit(this.guest);
   final border = 5.0;
   @override
   Widget build(BuildContext context) {
+    bool isNew = guest != null && guest.id != null ? false : true;
+    guest = guest ?? Guest();
+    address = guest.id != null && guest.addresses != null && guest.addresses != "" ? Address.fromJson(jsonDecode(guest.addresses))
+        : Address();
     return Scaffold(
         backgroundColor: Colors.white.withOpacity(0),
         body: Center(
@@ -136,14 +140,16 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               customInputSameHint(
                                                   (dynamic firstName) {
                                                 guest.firstName = firstName;
-                                              }, "FirstName"),
+                                              }, "FirstName",
+                                                  defaultText: guest.firstName),
                                               SizedBox(
                                                 height: hp(16.5 * 100 / 1080),
                                               ),
                                               customInputSameHint(
                                                   (dynamic email) {
                                                 guest.email = email;
-                                              }, "Email Address")
+                                              }, "Email Address",
+                                                  defaultText: guest.email)
                                             ],
                                           ),
                                         ),
@@ -156,7 +162,8 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               customInputSameHint(
                                                   (dynamic lastName) {
                                                 guest.lastName = lastName;
-                                              }, "Last Name"),
+                                              }, "Last Name",
+                                                  defaultText: guest.lastName),
                                               SizedBox(
                                                 height: hp(16.5 * 100 / 1080),
                                               ),
@@ -190,12 +197,12 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               Row(
                                                 children: <Widget>[
                                                   Expanded(
-                                                      child:
-                                                          customInputSameHint(
-                                                              (dynamic
-                                                                  _address) {
+                                                      child: customInputSameHint(
+                                                          (dynamic _address) {
                                                     address.address = _address;
-                                                  }, "Address")),
+                                                  }, "Address",
+                                                          defaultText:
+                                                              address.address)),
                                                   SizedBox(
                                                     width: wp(47 * 100 / 1920),
                                                   ),
@@ -205,7 +212,9 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                     address.addressLine2 =
                                                         _address;
                                                   }, "Address Line 2",
-                                                          "Apt, Suite, Building, Floor, Company etc.")),
+                                                          "Apt, Suite, Building, Floor, Company etc.",
+                                                          defaultText: address
+                                                              .addressLine2)),
                                                 ],
                                               ),
                                               SizedBox(
@@ -219,7 +228,10 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                               (dynamic
                                                                   _address) {
                                                     address.city = _address;
-                                                  }, "City")),
+                                                  }, "City",
+                                                              defaultText:
+                                                                  address
+                                                                      .city)),
                                                   SizedBox(
                                                     width: wp(23 * 100 / 1920),
                                                   ),
@@ -229,7 +241,10 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                               (dynamic
                                                                   _address) {
                                                     address.state = _address;
-                                                  }, "State")),
+                                                  }, "State",
+                                                              defaultText:
+                                                                  address
+                                                                      .state)),
                                                   SizedBox(
                                                     width: wp(23 * 100 / 1920),
                                                   ),
@@ -240,7 +255,9 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                                   _address) {
                                                     address.postalCode =
                                                         _address;
-                                                  }, "Postal Code", "XXXXX"))
+                                                  }, "Postal Code", "XXXXX",
+                                                              defaultText: address
+                                                                  .postalCode))
                                                 ],
                                               ),
                                             ],
@@ -333,7 +350,10 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                 (dynamic notes) {
                                               guest.customerNotes = notes;
                                             }, "Customer Notes",
-                                                "Add a customer note...", 112),
+                                                "Add a customer note...",
+                                                defaultText:
+                                                    guest.customerNotes,
+                                                height: 112),
                                           )
                                         ],
                                       ),
@@ -356,11 +376,4 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
           ),
         ));
   }
-}
-
-Widget buildAddress(bool adding) {
-  if (adding) {
-    return Container();
-  }
-  return Container();
 }

@@ -4,12 +4,15 @@ import 'FontUtils.dart';
 import 'ScreenUtils.dart';
 import 'package:bloc_concept/utils/country_picker_utils/CustomCountryPicker.dart';
 
-TextField customTextField(Function(String) onTap, String hint) {
+TextField customTextField(Function(String) onTap, String hint, [String text]) {
+  var controller = TextEditingController();
+  if (text != null) controller.text = text;
   return TextField(
     onChanged: (text) {
       onTap(text);
     },
     style: customTextStyle(19, Colors.black, Weight.bold),
+    controller: controller,
     textAlign: TextAlign.start,
     decoration: InputDecoration.collapsed(
         border: InputBorder.none,

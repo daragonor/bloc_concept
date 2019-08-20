@@ -75,7 +75,7 @@ class _GuestScreenState extends State<GuestScreen> {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return GuestBookAddEdit(true);
+                                    return GuestBookAddEdit();
                                   });
                             },
                             child: Text(
@@ -117,9 +117,10 @@ class _GuestScreenState extends State<GuestScreen> {
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
-                        itemCount: snapshot.hasData?snapshot.data.length:0,
+                        itemCount: snapshot.hasData ? snapshot.data.length : 0,
                         itemBuilder: (BuildContext context, int index) {
-                          return GuestsRow(snapshot.data, index, selectedRow, () {
+                          return GuestsRow(
+                              snapshot.data[index], index, selectedRow, () {
                             setState(() {
                               selectedRow = index;
                             });
@@ -127,7 +128,7 @@ class _GuestScreenState extends State<GuestScreen> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return GuestBookAddEdit(false);
+                                  return GuestBookAddEdit(snapshot.data[index]);
                                 });
                           });
                         },

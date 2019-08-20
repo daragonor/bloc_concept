@@ -1,16 +1,17 @@
 import 'package:bloc_concept/data/sqflite/database.dart';
 import 'package:bloc_concept/data/models/Guest.dart';
-import 'AddressRepository.dart';
+import 'dart:convert';
 var _dbHelper = DatabaseHelper.instance;
 
 Future insertGuest(Guest guest, Address address) async {
-  var addressId = await insertAddress(address);
+  var addressString = jsonEncode(address.toJson());
+  //var addressId = await insertAddress(address);
   Map<String, dynamic> row = {
     Guest.columnFirstName: guest.firstName,
     Guest.columnLastName: guest.lastName,
     Guest.columnEmail: guest.email,
     Guest.columnPhone: guest.phone,
-    Guest.columnAddresses: [addressId],
+    Guest.columnAddresses: addressString,
     Guest.columnBirthDate: guest.birthDate,
     Guest.columnAnniversary: guest.anniversary,
     Guest.columnCustomerNotes: guest.customerNotes,
@@ -24,7 +25,7 @@ Future<List<Guest>> queryGuests() async {
   print('query all rows:');
   List<Guest> guests=[];
   allRows.forEach((row)  {
-    guests.add(Guest.mapRow(row));
+    guests.add(Guest.fromJson(row));
   });
   return guests;
 }

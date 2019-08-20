@@ -6,26 +6,25 @@ class Address {
   static final columnCity = "address_city";
   static final columnState = "address_state";
   static final columnPostalCode = "address_postal_code";
-  static Address fromRow(Map row) {
-    return Address(
-      row[columnId],
-      row[columnAddress],
-      row[columnAddressLine2],
-      row[columnCity],
-      row[columnState],
-      row[columnPostalCode]
-    );
-  }
-  static final String dbCreate= '''
-          CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY,
-            $columnAddress TEXT NOT NULL,
-            $columnAddressLine2 TEXT NOT NULL,
-            $columnCity TEXT NOT NULL,
-            $columnState TEXT NOT NULL,
-            $columnPostalCode INTEGER NOT NULL
-          )
-          ''';
+  Address.fromJson(Map<String, dynamic> json)
+      : id = json[columnId],
+        address = json[columnAddress],
+        addressLine2 = json[columnAddressLine2],
+        city = json[columnCity],
+        state = json[columnState],
+        postalCode = json[columnPostalCode];
+
+
+
+  Map<String, dynamic> toJson() => {
+        columnId: id,
+        columnAddress: address,
+        columnAddressLine2: addressLine2,
+        columnCity: city,
+        columnState: state,
+        columnPostalCode: postalCode
+      };
+  
   int id;
   String address;
   String addressLine2;

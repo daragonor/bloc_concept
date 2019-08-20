@@ -1,7 +1,5 @@
 export 'Address.dart';
 
-import 'dart:typed_data';
-
 class Guest {
   static final table = 'guest';
   static final columnId = "guest_id";
@@ -13,19 +11,27 @@ class Guest {
   static final columnBirthDate = "guest_birth_date";
   static final columnAnniversary = "guest_anniversary";
   static final columnCustomerNotes = "guest_customer_notes";
-  static Guest mapRow(Map row) {
-    return Guest(
-      row[columnId],
-      row[columnFirstName],
-      row[columnLastName],
-      row[columnEmail],
-      row[columnPhone],
-      row[columnAddresses],
-      row[columnBirthDate],
-      row[columnAnniversary],
-      row[columnCustomerNotes],
-    );
-  }
+  Guest.fromJson(Map<String, dynamic> json)
+      : id = json[columnId],
+        firstName = json[columnFirstName],
+        lastName = json[columnLastName],
+        email = json[columnEmail],
+        phone = json[columnPhone],
+        addresses = json[columnAddresses],
+        birthDate = json[columnBirthDate],
+        anniversary = json[columnAnniversary],
+        customerNotes = json[columnCustomerNotes];
+  Map<String, dynamic> toJson() => {
+        columnId: id,
+        columnFirstName: firstName,
+        columnLastName: lastName,
+        columnEmail: email,
+        columnPhone: phone,
+        columnAddresses: addresses,
+        columnBirthDate: birthDate,
+        columnAnniversary: anniversary,
+        columnCustomerNotes: customerNotes
+      };
 
   static final String dbCreate = '''
           CREATE TABLE $table (
@@ -34,7 +40,7 @@ class Guest {
             $columnLastName TEXT NOT NULL,
             $columnEmail TEXT NOT NULL,
             $columnPhone TEXT NOT NULL,
-            $columnAddresses BLOB NOT NULL,
+            $columnAddresses TEXT NOT NULL,
             $columnBirthDate TEXT NOT NULL,
             $columnAnniversary TEXT NOT NULL,
             $columnCustomerNotes TEXT NOT NULL
@@ -45,18 +51,18 @@ class Guest {
   String lastName;
   String email;
   String phone;
-  Uint8List addresses;
+  String addresses;
   String birthDate;
   String anniversary;
   String customerNotes;
   Guest(
       [this.id,
-      this.firstName="",
-      this.lastName="",
-      this.email="",
-      this.phone="",
-      this.addresses,
-      this.birthDate="",
-      this.anniversary="",
-      this.customerNotes=""]);
+      this.firstName = "",
+      this.lastName = "",
+      this.email = "",
+      this.phone = "",
+      this.addresses = "",
+      this.birthDate = "",
+      this.anniversary = "",
+      this.customerNotes = ""]);
 }
