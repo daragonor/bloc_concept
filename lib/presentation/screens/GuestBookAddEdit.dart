@@ -1,9 +1,12 @@
+import 'package:bloc_concept/presentation/blocs/GuestBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_concept/utils/ScreenUtils.dart';
 import 'package:bloc_concept/utils/FontUtils.dart';
 import 'package:bloc_concept/utils/ColorUtils.dart';
 import 'package:bloc_concept/utils/FormUtils.dart';
 import 'package:bloc_concept/utils/SpreadSheetUtil.dart';
+import 'package:bloc_concept/data/models/Guest.dart';
+import 'package:bloc_concept/data/repository/GuestRepository.dart';
 
 class GuestBookAddEdit extends StatefulWidget {
   final bool isNew;
@@ -18,7 +21,8 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
   String anniv = "MM / DD / YY";
   bool birthChanged = false;
   bool annivChanged = false;
-
+  Guest guest = Guest();
+  Address address = Address();
   _GuestBookAddEdit(this.isNew);
   final border = 5.0;
   @override
@@ -73,7 +77,15 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                               color: ColorUtils.doneButton,
                               borderRadius:
                                   BorderRadius.circular(hp(8 * 100 / 1080))),
-                          child: Center(child: doneButton()),
+                          child: Center(
+                              child: InkWell(
+                                  onTap: () {
+                                    insertGuest(guest, address).then((_) {
+                                      guestBloc.getData();
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                  child: doneButton())),
                         ),
                       ],
                     ),
@@ -121,12 +133,17 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                         Expanded(
                                           child: Column(
                                             children: <Widget>[
-                                              customInputSameHint("FirstName"),
+                                              customInputSameHint(
+                                                  (dynamic firstName) {
+                                                guest.firstName = firstName;
+                                              }, "FirstName"),
                                               SizedBox(
                                                 height: hp(16.5 * 100 / 1080),
                                               ),
                                               customInputSameHint(
-                                                  "Email Address")
+                                                  (dynamic email) {
+                                                guest.email = email;
+                                              }, "Email Address")
                                             ],
                                           ),
                                         ),
@@ -136,11 +153,17 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                         Expanded(
                                           child: Column(
                                             children: <Widget>[
-                                              customInputSameHint("Last Name"),
+                                              customInputSameHint(
+                                                  (dynamic lastName) {
+                                                guest.lastName = lastName;
+                                              }, "Last Name"),
                                               SizedBox(
                                                 height: hp(16.5 * 100 / 1080),
                                               ),
-                                              customInputPhoneNumber(),
+                                              customInputPhoneNumber(
+                                                  (dynamic phone) {
+                                                guest.phone = phone;
+                                              }),
                                             ],
                                           ),
                                         )
@@ -169,13 +192,19 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                   Expanded(
                                                       child:
                                                           customInputSameHint(
-                                                              "Address")),
+                                                              (dynamic
+                                                                  _address) {
+                                                    address.address = _address;
+                                                  }, "Address")),
                                                   SizedBox(
                                                     width: wp(47 * 100 / 1920),
                                                   ),
                                                   Expanded(
                                                       child: customInputDetailHint(
-                                                          "Address Line 2",
+                                                          (dynamic _address) {
+                                                    address.addressLine2 =
+                                                        _address;
+                                                  }, "Address Line 2",
                                                           "Apt, Suite, Building, Floor, Company etc.")),
                                                 ],
                                               ),
@@ -187,22 +216,31 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                   Expanded(
                                                       child:
                                                           customInputSameHint(
-                                                              "City")),
+                                                              (dynamic
+                                                                  _address) {
+                                                    address.city = _address;
+                                                  }, "City")),
                                                   SizedBox(
                                                     width: wp(23 * 100 / 1920),
                                                   ),
                                                   Expanded(
                                                       child:
                                                           customInputSameHint(
-                                                              "State")),
+                                                              (dynamic
+                                                                  _address) {
+                                                    address.state = _address;
+                                                  }, "State")),
                                                   SizedBox(
                                                     width: wp(23 * 100 / 1920),
                                                   ),
                                                   Expanded(
                                                       child:
                                                           customInputDetailHint(
-                                                              "Postal Code",
-                                                              "XXXXX"))
+                                                              (dynamic
+                                                                  _address) {
+                                                    address.postalCode =
+                                                        _address;
+                                                  }, "Postal Code", "XXXXX"))
                                                 ],
                                               ),
                                             ],
@@ -256,6 +294,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               birth,
                                               birthChanged,
                                               context, (date) {
+                                            guest.birthDate = date.toString();
                                             setState(() {
                                               birthChanged = true;
                                               birth =
@@ -272,6 +311,8 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               anniv,
                                               annivChanged,
                                               context, (date) {
+                                            guest.anniversary = date.toString();
+
                                             setState(() {
                                               annivChanged = true;
                                               anniv =
@@ -289,9 +330,10 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                         children: <Widget>[
                                           Expanded(
                                             child: customInputDetailHint(
-                                                "Customer Notes",
-                                                "Add a customer note...",
-                                                112),
+                                                (dynamic notes) {
+                                              guest.customerNotes = notes;
+                                            }, "Customer Notes",
+                                                "Add a customer note...", 112),
                                           )
                                         ],
                                       ),

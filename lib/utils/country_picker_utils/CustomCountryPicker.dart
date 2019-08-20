@@ -1,3 +1,4 @@
+import 'package:bloc_concept/utils/ScreenUtils.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/countries.dart';
 import 'package:country_pickers/utils/typedefs.dart';
@@ -74,6 +75,7 @@ class _CustomCountryPickerDropdownState
       child: DropdownButtonHideUnderline(
         child: DropdownButton<Country>(
           isExpanded: true,
+          iconSize: hp(15*100/1080),
           onChanged: (value) {
             setState(() {
               _selectedCountry = value;

@@ -1,6 +1,7 @@
+import 'package:bloc_concept/presentation/blocs/GuestBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_concept/utils/SpreadSheetUtil.dart';
-import '../utils/SearchBox.dart';
+import '../../utils/SearchBox.dart';
 import 'package:bloc_concept/utils/ColorUtils.dart';
 import 'package:bloc_concept/utils/FontUtils.dart';
 import 'GuestBookAddEdit.dart';
@@ -12,6 +13,20 @@ class GuestScreen extends StatefulWidget {
 
 class _GuestScreenState extends State<GuestScreen> {
   var selectedRow = -1;
+  @override
+  void initState() {
+    super.initState();
+    //getData();
+    guestBloc.getData();
+  }
+
+  /*  getData() async {
+    var tempguests = await queryGuests();
+    setState(() {
+      guests = tempguests;
+    });
+  } */
+
   @override
   Widget build(BuildContext context) {
     hp = ScreenUtils(MediaQuery.of(context).size).hp;
@@ -66,7 +81,7 @@ class _GuestScreenState extends State<GuestScreen> {
                             child: Text(
                               "+ ADD NEW GUEST",
                               style: TextStyle(
-                                  fontSize: hp(2.2),
+                                  fontSize: hp(23.76 * 100 / 1080),
                                   color: Colors.white,
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600),
@@ -79,10 +94,10 @@ class _GuestScreenState extends State<GuestScreen> {
                 ],
               )),
               SizedBox(
-                height: hp(3),
+                height: hp(32.4 * 100 / 1080),
               ),
               Container(
-                height: hp(6.5),
+                height: hp(70.2 * 100 / 1080),
                 child: Row(
                   children: <Widget>[
                     customHeader("NAME"),
@@ -93,26 +108,32 @@ class _GuestScreenState extends State<GuestScreen> {
                 ),
               ),
               Expanded(
-                child: ScrollConfiguration(
-                  behavior: NoGlowingBehavior(),
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemCount: guests.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GuestsRow(index, selectedRow, () {
-                        setState(() {
-                          selectedRow = index;
-                        });
-                      }, () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return GuestBookAddEdit(false);
+                child: StreamBuilder(
+                  stream: guestBloc.stream,
+                  initialData: [],
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return ScrollConfiguration(
+                      behavior: NoGlowingBehavior(),
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: snapshot.hasData?snapshot.data.length:0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GuestsRow(snapshot.data, index, selectedRow, () {
+                            setState(() {
+                              selectedRow = index;
                             });
-                      });
-                    },
-                  ),
+                          }, () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return GuestBookAddEdit(false);
+                                });
+                          });
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

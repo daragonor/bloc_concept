@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:bloc_concept/models/Guest.dart';
+import 'package:bloc_concept/data/models/Guest.dart';
 import 'package:bloc_concept/utils/ColorUtils.dart';
 import 'package:bloc_concept/utils/ScreenUtils.dart';
-
-final List<Guest> guests = [
-  Guest("Allan Roekart", "(000) 000 - 0000", "allan@yahoo.com",
-      "A23 Faifax Ave Los Angeles CA 9008"),
-  Guest("Alex Gallard", "(000) 000 - 0000", "allan@yahoo.com",
-      "A23 Faifax Ave Los Angeles CA 9008"),
-  Guest("Becka Coombar", "(000) 000 - 0000", "allan@yahoo.com",
-      "A23 Faifax Ave Los Angeles CA 9008"),
-];
+import 'package:bloc_concept/presentation/blocs/AddressBloc.dart';
 
 class GuestsRow extends StatelessWidget {
   final idx;
   final selectedRow;
+  final List<Guest> guests;
   final void Function() select;
   final void Function() edit;
-
-  GuestsRow(this.idx, this.selectedRow, this.select, this.edit);
+  GuestsRow(this.guests, this.idx, this.selectedRow, this.select, this.edit);
   @override
   Widget build(BuildContext context) {
     bool selected = idx != selectedRow;
+    var guest = guests[idx];
+    addressBloc.getData();
     return Container(
       decoration: BoxDecoration(
         color: selected ? Colors.white : ColorUtils.accent,
@@ -31,15 +25,24 @@ class GuestsRow extends StatelessWidget {
         onTap: () {
           select();
         },
-        onDoubleTap: (){
+        onDoubleTap: () {
           edit();
         },
         child: Row(
           children: <Widget>[
-            GuestCell(0, idx, selected),
-            GuestCell(1, idx, selected),
-            GuestCell(2, idx, selected),
-            GuestCell(3, idx, selected),
+            //GuestCell(0, guests[idx], selected),
+            guestCell(selected, "${guest.firstName} ${guest.lastName}"),
+            guestCell(selected, "${guest.phone}"),
+            guestCell(selected, "${guest.email}"),
+
+            StreamBuilder(
+              stream: addressBloc.stream,
+              initialData: [Address()],
+              builder: (context, snapshot){
+                var address = snapshot.data[0];
+                return guestCell(selected, "${address.address} ${address.addressLine2} ${address.city} ${address.state} ${address.postalCode}");
+              },
+            )
           ],
         ),
       ),
@@ -47,41 +50,79 @@ class GuestsRow extends StatelessWidget {
   }
 }
 
-class GuestCell extends StatelessWidget {
+class GuestCell extends StatefulWidget {
   final col;
-  final row;
+  final guest;
   final selected;
-  GuestCell(this.col, this.row, this.selected);
+  GuestCell(this.col, this.guest, this.selected);
   @override
-  Widget build(BuildContext context) {
-    String data;
-    switch (col) {
-      case 0:
-        data = guests[row].name;
-        break;
-      case 1:
-        data = guests[row].phone;
-        break;
-      case 2:
-        data = guests[row].email;
-        break;
-      case 3:
-        data = guests[row].address;
-        break;
-      default:
-    }
-    return Expanded(
+  _GuestCell createState() => _GuestCell(col, guest, selected);
+}
+
+guestCell(bool selected, String data) => Expanded(
       child: Container(
-        height: hp(7),
+        height: hp(75.6 * 100 / 1080),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Center(
             child: Text(
               '$data',
               style: TextStyle(
                   fontFamily: 'Montserrat',
-                  fontSize: hp(1.4),
-                  color: selected ?  ColorUtils.spreadsText : Colors.white,
+                  fontSize: hp(15.12 * 100 / 1080),
+                  color: selected ? ColorUtils.spreadsText : Colors.white,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+
+class _GuestCell extends State<GuestCell> {
+  final col;
+  final guest;
+  final selected;
+  var _address = "";
+  _GuestCell(this.col, this.guest, this.selected);
+  @override
+  Widget build(BuildContext context) {
+    String data;
+    switch (col) {
+      case 0:
+        data = "${guest.firstName} ${guest.lastName}";
+        break;
+      case 1:
+        data = guest.phone;
+        break;
+      case 2:
+        data = guest.email;
+        break;
+      case 3:
+        int address = guest.addresses[0];
+        getAddress(by: address).then((val) {
+          setState(() {
+            _address =
+                "${val.address} ${val.addressLine2} ${val.city} ${val.state} ${val.postalCode}";
+          });
+        });
+        data = _address;
+
+        break;
+      default:
+    }
+    return Expanded(
+      child: Container(
+        height: hp(75.6 * 100 / 1080),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              '$data',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: hp(15.12 * 100 / 1080),
+                  color: selected ? ColorUtils.spreadsText : Colors.white,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -107,11 +148,10 @@ Expanded customHeader(String text) {
       child: Center(
         child: Text(
           '$text',
-          style:
-              TextStyle(
-                fontFamily: 'Montserrat', 
-                fontSize: hp(30*100/1080),
-                fontWeight: FontWeight.w600),
+          style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: hp(30 * 100 / 1080),
+              fontWeight: FontWeight.w600),
         ),
       ),
     ),

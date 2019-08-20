@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'ColorUtils.dart';
 import 'FontUtils.dart';
 import 'ScreenUtils.dart';
-import 'package:bloc_concept/utils/country_picker_utils/CustomCountryPicker.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'TextFieldUtils.dart';
 
 Widget customInput({String title, Widget input, double height = 61.0}) {
   return Row(
@@ -38,28 +37,21 @@ Widget customInput({String title, Widget input, double height = 61.0}) {
   );
 }
 
-TextField customTextField(String hint) {
-  return TextField(
-    textAlign: TextAlign.start,
-    decoration: InputDecoration.collapsed(
-        border: InputBorder.none,
-        hintText: "$hint",
-        hintStyle: customTextStyle(19, ColorUtils.hintText, Weight.normal)),
-  );
-}
-
-Widget customInputDetailHint(String title, String detail,
+Widget customInputDetailHint(
+    Function(String) onTap, String title, String detail,
     [double height = 61]) {
   return customInput(
-      title: title, input: customTextField("$detail"), height: height);
+      title: title, input: customTextField(onTap, "$detail"), height: height);
 }
 
-Widget customInputSameHint(String title) {
-  return customInputDetailHint(title, title);
+Widget customInputSameHint(Function(dynamic) onTap, String title) {
+  return customInputDetailHint(onTap, title, title);
 }
 
-Widget customInputPhoneNumber() {
-  return customInput(title: "PHONE NUMBER", input: phoneTextField());
+Widget customInputPhoneNumber(
+  Function(dynamic) onTap,
+) {
+  return customInput(title: "PHONE NUMBER", input: phoneTextField(onTap));
 }
 
 Widget customInputDatePicker(String title, String defaultDate, bool changed,
@@ -92,27 +84,40 @@ Widget customInputDatePicker(String title, String defaultDate, bool changed,
                               width: 0.0, color: ColorUtils.inputBorder),
                         ),
                       ),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: customText(
-                                  "$defaultDate",
-                                  changed ? Colors.black : ColorUtils.hintText,
-                                  19)),
-                          GestureDetector(
-                            onTap: () {
-                              DatePicker.showDatePicker(context, onConfirm:
-                                  (DateTime dateTime, List<int> selectedIndex) {
-                                dateCallBack(dateTime);
-                              });
+                      child: GestureDetector(
+                        onTap: () async {
+                          var picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2018),
+                            lastDate: DateTime(2030),
+                            builder: (BuildContext context, Widget child) {
+                              return Theme(
+                                data: ThemeData(),
+                                child: child,
+                              );
                             },
-                            child: Icon(
+                          );
+                          if (picked != null) {
+                            dateCallBack(picked);
+                          }
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                                child: customText(
+                                    "$defaultDate",
+                                    changed
+                                        ? Colors.black
+                                        : ColorUtils.hintText,
+                                    19)),
+                            Icon(
                               Icons.calendar_today,
                               color: ColorUtils.inputBorder,
                               size: hp(24 * 100 / 1080),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -125,62 +130,6 @@ Widget customInputDatePicker(String title, String defaultDate, bool changed,
     ],
   );
 }
-
-TextField dateTextField() {
-  return TextField(
-    decoration: InputDecoration(
-        hintText: "MM / DD / YY",
-        hintStyle: customTextStyle(19, ColorUtils.hintText)),
-  );
-}
-
-Widget phoneTextField() {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: <Widget>[
-      Container(
-        decoration: BoxDecoration(
-          border: Border(
-            right: BorderSide(width: 0.0, color: ColorUtils.spreadsheet),
-          ),
-        ),
-        width: wp(130 * 100 / 1920),
-        child: CustomCountryPickerDropdown(
-          initialValue: 'us',
-          itemBuilder: _buildDropdownItem,
-          onValuePicked: (Country country) {
-            print("${country.name}");
-          },
-        ),
-      ),
-      Expanded(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.only(left: wp(15.7 * 100 / 1920)),
-            child: customTextField("(XXX) XXX XXXX"),
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _buildDropdownItem(Country country) => Container(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(child: CountryPickerUtils.getDefaultFlagImage(country)),
-          SizedBox(width: 8.0),
-          Center(
-            child: customText(
-              "+${country.phoneCode}",
-              ColorUtils.spreadsText,
-              hp(12 * 100 / 1080),
-            ),
-          ),
-        ],
-      ),
-    );
 
 Widget addressCell(Widget content) => AspectRatio(
       aspectRatio: 220 / 190,
