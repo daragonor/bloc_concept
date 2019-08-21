@@ -94,9 +94,7 @@ class _GuestScreenState extends State<GuestScreen> {
                   ),
                 ],
               )),
-              SizedBox(
-                height: hp(32.4),
-              ),
+              SizedBox(height: hp(32.4)),
               Container(
                 height: hp(70.2),
                 child: Row(

@@ -1,17 +1,19 @@
 import 'package:bloc_concept/data/sqflite/database.dart';
 import 'package:bloc_concept/data/models/Guest.dart';
 import 'dart:convert';
+
 var _dbHelper = DatabaseHelper.instance;
 
-Future insertGuest(Guest guest, Address address) async {
-  var addressString = jsonEncode(address.toJson());
+Future insertGuest(Guest guest, List<Address> addresses) async {
+  
+  var addressesString = Address.toJsonList(addresses);
   //var addressId = await insertAddress(address);
   Map<String, dynamic> row = {
     Guest.columnFirstName: guest.firstName,
     Guest.columnLastName: guest.lastName,
     Guest.columnEmail: guest.email,
     Guest.columnPhone: guest.phone,
-    Guest.columnAddresses: addressString,
+    Guest.columnAddresses: addressesString,
     Guest.columnBirthDate: guest.birthDate,
     Guest.columnAnniversary: guest.anniversary,
     Guest.columnCustomerNotes: guest.customerNotes,
@@ -23,21 +25,24 @@ Future insertGuest(Guest guest, Address address) async {
 Future<List<Guest>> queryGuests() async {
   final allRows = await _dbHelper.queryAllRows(Guest.table);
   print('query all rows:');
-  List<Guest> guests=[];
-  allRows.forEach((row)  {
+  List<Guest> guests = [];
+  allRows.forEach((row) {
     guests.add(Guest.fromJson(row));
   });
   return guests;
 }
 
-void updateGuest(Guest guest) async {
+Future updateGuest(Guest guest) async {
   Map<String, dynamic> row = {
     Guest.columnId: guest.id,
     Guest.columnFirstName: guest.firstName,
     Guest.columnLastName: guest.lastName,
     Guest.columnEmail: guest.email,
     Guest.columnPhone: guest.phone,
-    Guest.columnAddresses: 0
+    Guest.columnAddresses: guest.addresses,
+    Guest.columnBirthDate: guest.birthDate,
+    Guest.columnAnniversary: guest.anniversary,
+    Guest.columnCustomerNotes: guest.customerNotes,
   };
   final rowsAffected = await _dbHelper.update(row, Guest.table, Guest.columnId);
   print('updated $rowsAffected row(s)');

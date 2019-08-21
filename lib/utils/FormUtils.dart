@@ -1,3 +1,4 @@
+import 'package:bloc_concept/data/models/Address.dart';
 import 'package:flutter/material.dart';
 import 'ColorUtils.dart';
 import 'FontUtils.dart';
@@ -38,28 +39,33 @@ Widget customInput({String title, Widget input, double height = 61.0}) {
 }
 
 Widget customInputDetailHint(
-    Function(String) onTap, String title, String detail,
-    {String defaultText, double height = 61}) {
-  final field = defaultText != ""
-      ? customTextField(onTap, "$detail", defaultText)
+    {String title,
+    String detail,
+    Function(String) onTap,
+    String guestInfo,
+    double height = 61}) {
+  final field = guestInfo != ""
+      ? customTextField(onTap, "$detail", guestInfo)
       : customTextField(onTap, "$detail");
 
   return customInput(title: title, input: field, height: height);
 }
 
-Widget customInputSameHint(Function(dynamic) onTap, String title,
-    {String defaultText}) {
-  return customInputDetailHint(onTap, title, title, defaultText: defaultText);
+Widget customInputSameHint(
+    {String title, String guestInfo, Function(dynamic) onTap}) {
+  return customInputDetailHint(
+      title: title, detail: title, guestInfo: guestInfo, onTap: onTap);
 }
 
-Widget customInputPhoneNumber(
-  Function(dynamic) onTap,
-) {
-  return customInput(title: "PHONE NUMBER", input: phoneTextField(onTap));
+Widget customInputPhoneNumber({Function(dynamic) onTap, String guestInfo}) {
+  final field = guestInfo != ""
+      ? phoneTextField(onTap, guestInfo)
+      : phoneTextField(onTap);
+  return customInput(title: "PHONE NUMBER", input: field);
 }
 
-Widget customInputDatePicker(String title, String defaultDate, bool changed,
-    BuildContext context, Function(DateTime) dateCallBack) {
+Widget customInputDatePicker({String title, String defaultDate, bool changed,
+    BuildContext context, Function(DateTime) dateCallBack}) {
   return Row(
     children: <Widget>[
       Expanded(
@@ -168,21 +174,20 @@ Widget addressButton() => addressCell(
       ),
     );
 
-Widget addressInfo() => Padding(
+Widget addressInfo(Address address) => Padding(
       padding: EdgeInsets.only(left: wp(15.7)),
       child: addressCell(
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 24.51, vertical: 21.25),
-              child: customText(
-                  "4360 Sunset Blvd Los Angeles, CA 90029", Colors.black, 17),
+              padding: EdgeInsets.only(
+                  left: wp(24.51), right: wp(24.51), top: hp(21.25)),
+              child: customText(address.tilePresentation(), Colors.black, 17),
             ),
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: wp(14.66), vertical: hp(16)),
+              padding: EdgeInsets.only(
+                  left: wp(14.66), right: wp(14.66), bottom: hp(16)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[

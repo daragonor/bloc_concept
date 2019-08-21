@@ -15,7 +15,9 @@ class GuestsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool selected = idx != selectedRow;
-    var address = Address.fromJson(jsonDecode(guest.addresses));
+    var address = Address.fromJson(jsonDecode(guest.addresses)[0]);
+    //TODO
+    //var address = jsonDecode(guest.addresses)[0]??Address()
     return Container(
       decoration: BoxDecoration(
         color: selected ? Colors.white : ColorUtils.accent,
@@ -34,8 +36,7 @@ class GuestsRow extends StatelessWidget {
             guestCell(selected, "${guest.firstName} ${guest.lastName}"),
             guestCell(selected, "${guest.phone}"),
             guestCell(selected, "${guest.email}"),
-            guestCell(selected,
-                "${address.address} ${address.addressLine2} ${address.city} ${address.state} ${address.postalCode}")
+            guestCell(selected, "${address.rowPresentation()}")
           ],
         ),
       ),

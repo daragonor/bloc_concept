@@ -21,7 +21,7 @@ TextField customTextField(Function(String) onTap, String hint, [String text]) {
   );
 }
 
-Widget phoneTextField(Function(String) onTap) {
+Widget phoneTextField(Function(String) onTap, [String text]) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: <Widget>[
@@ -44,7 +44,7 @@ Widget phoneTextField(Function(String) onTap) {
         child: Center(
           child: Padding(
             padding: EdgeInsets.only(left: wp(15.7)),
-            child: customTextField(onTap, "(XXX) XXX XXXX"),
+            child: customTextField(onTap, "(XXX) XXX XXXX", text),
           ),
         ),
       ),
