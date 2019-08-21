@@ -16,10 +16,10 @@ Widget customInput({String title, Widget input, double height = 61.0}) {
               ],
             ),
             SizedBox(
-              height: hp(3.5 * 100 / 1080),
+              height: hp(3.5),
             ),
             Container(
-                height: hp(height * 100 / 1080),
+                height: hp(height),
                 decoration: BoxDecoration(
                     border: Border.all(
                       width: 0.0,
@@ -27,7 +27,7 @@ Widget customInput({String title, Widget input, double height = 61.0}) {
                     ),
                     borderRadius: BorderRadius.circular(2.0)),
                 child: Container(
-                    padding: EdgeInsets.only(left: wp(20.5 * 100 / 1920)),
+                    padding: EdgeInsets.only(left: wp(20.5)),
                     alignment: Alignment.centerLeft,
                     child: input))
           ],
@@ -44,7 +44,6 @@ Widget customInputDetailHint(
       ? customTextField(onTap, "$detail", defaultText)
       : customTextField(onTap, "$detail");
 
-      
   return customInput(title: title, input: field, height: height);
 }
 
@@ -72,16 +71,15 @@ Widget customInputDatePicker(String title, String defaultDate, bool changed,
               ],
             ),
             SizedBox(
-              height: hp(3.5 * 100 / 1080),
+              height: hp(3.5),
             ),
             Container(
-              height: hp(42 * 100 / 1080),
+              height: hp(42),
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: hp(12 * 100 / 1080)),
+                      padding: EdgeInsets.symmetric(vertical: hp(12)),
                       constraints: BoxConstraints.expand(),
                       decoration: BoxDecoration(
                         border: Border(
@@ -119,7 +117,7 @@ Widget customInputDatePicker(String title, String defaultDate, bool changed,
                             Icon(
                               Icons.calendar_today,
                               color: ColorUtils.inputBorder,
-                              size: hp(24 * 100 / 1080),
+                              size: hp(24),
                             ),
                           ],
                         ),
@@ -159,11 +157,11 @@ Widget addressButton() => addressCell(
             child: Icon(
               Icons.add_circle,
               color: ColorUtils.addressGray,
-              size: hp(81 * 100 / 1080),
+              size: hp(81),
             ),
           ),
           SizedBox(
-            height: hp(10 * 100 / 1080),
+            height: hp(10),
           ),
           customText("Add Adress", ColorUtils.addressGray, 14),
         ],
@@ -171,7 +169,7 @@ Widget addressButton() => addressCell(
     );
 
 Widget addressInfo() => Padding(
-      padding: EdgeInsets.only(left: wp(15.7 * 100 / 1920)),
+      padding: EdgeInsets.only(left: wp(15.7)),
       child: addressCell(
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,9 +181,8 @@ Widget addressInfo() => Padding(
                   "4360 Sunset Blvd Los Angeles, CA 90029", Colors.black, 17),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: wp(14.66 * 100 / 1080),
-                  vertical: hp(16 * 100 / 1080)),
+              padding:
+                  EdgeInsets.symmetric(horizontal: wp(14.66), vertical: hp(16)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
@@ -195,7 +192,7 @@ Widget addressInfo() => Padding(
                         "Delete".toUpperCase(), ColorUtils.accent2, 12),
                   ),
                   SizedBox(
-                    width: wp(20 * 100 / 1920),
+                    width: wp(20),
                   ),
                   GestureDetector(
                     onTap: () {},

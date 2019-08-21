@@ -9,43 +9,35 @@ Widget customTitle(String text, double percentage, {bool spacing}) {
         color: ColorUtils.title,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w600,
-        fontSize: hp(percentage*100/1080),
-        letterSpacing: (spacing?? false)? 0.8 : 0.0),
+        fontSize: hp(percentage),
+        letterSpacing: (spacing ?? false) ? 0.8 : 0.0),
   );
 }
 
 Widget areaTitle(String text) {
-  return Text(
-    "$text",
-    style: customTextStyle(33.78, ColorUtils.accent)
-  );
+  return Text("$text", style: customTextStyle(33.78, ColorUtils.accent));
 }
 
 Widget doneButton() {
-  return Text(
-    "Done".toUpperCase(),
-    style: customTextStyle(29, Colors.white,Weight.normal)
-  );
+  return Text("Done".toUpperCase(),
+      style: customTextStyle(29, Colors.white, Weight.normal));
 }
 
 Widget fieldTitle(String text) {
-  return Text(
-    "$text",
-    style: customTextStyle(22, Colors.black)
-  );
-}
-Widget customText(String text, Color color, double size) {
-  return Text(
-    "$text",
-    style: customTextStyle(size, color)
-  );
+  return Text("$text", style: customTextStyle(22, Colors.black));
 }
 
-enum Weight {normal, bold}
+Widget customText(String text, Color color, double size) {
+  return Text("$text", style: customTextStyle(size, color));
+}
+
+enum Weight { normal, bold }
 TextStyle customTextStyle(double percentage, Color color, [Weight weight]) {
   return TextStyle(
       color: color,
       fontFamily: 'Montserrat',
-      fontWeight: (weight?? Weight.bold) == Weight.normal ? FontWeight.w500 : FontWeight.w600,
-      fontSize: hp(percentage*100/1080));
+      fontWeight: (weight ?? Weight.bold) == Weight.normal
+          ? FontWeight.w500
+          : FontWeight.w600,
+      fontSize: hp(percentage));
 }

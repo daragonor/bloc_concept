@@ -75,7 +75,7 @@ class _CustomCountryPickerDropdownState
       child: DropdownButtonHideUnderline(
         child: DropdownButton<Country>(
           isExpanded: true,
-          iconSize: hp(15*100/1080),
+          iconSize: hp(15),
           onChanged: (value) {
             setState(() {
               _selectedCountry = value;

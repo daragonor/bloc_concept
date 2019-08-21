@@ -43,10 +43,9 @@ class GuestsRow extends StatelessWidget {
   }
 }
 
-
 guestCell(bool selected, String data) => Expanded(
       child: Container(
-        height: hp(75.6 * 100 / 1080),
+        height: hp(75.6),
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Center(
@@ -54,7 +53,7 @@ guestCell(bool selected, String data) => Expanded(
               '$data',
               style: TextStyle(
                   fontFamily: 'Montserrat',
-                  fontSize: hp(15.12 * 100 / 1080),
+                  fontSize: hp(15.12),
                   color: selected ? ColorUtils.spreadsText : Colors.white,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -81,7 +80,7 @@ Expanded customHeader(String text) {
           '$text',
           style: TextStyle(
               fontFamily: 'Montserrat',
-              fontSize: hp(30 * 100 / 1080),
+              fontSize: hp(30),
               fontWeight: FontWeight.w600),
         ),
       ),

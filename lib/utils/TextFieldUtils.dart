@@ -31,7 +31,7 @@ Widget phoneTextField(Function(String) onTap) {
             right: BorderSide(width: 0.0, color: ColorUtils.spreadsheet),
           ),
         ),
-        width: wp(130 * 100 / 1920),
+        width: wp(130),
         child: CustomCountryPickerDropdown(
           initialValue: 'us',
           itemBuilder: _buildDropdownItem,
@@ -43,7 +43,7 @@ Widget phoneTextField(Function(String) onTap) {
       Expanded(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.only(left: wp(15.7 * 100 / 1920)),
+            padding: EdgeInsets.only(left: wp(15.7)),
             child: customTextField(onTap, "(XXX) XXX XXXX"),
           ),
         ),
@@ -57,8 +57,8 @@ Widget _buildDropdownItem(Country country) => Container(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-              height: (hp(28 * 100 / 1080)),
-              width: wp(50 * 100 / 1920),
+              height: (hp(28)),
+              width: wp(50),
               child: CountryPickerUtils.getDefaultFlagImage(country)),
           SizedBox(width: 8.0),
           Expanded(

@@ -29,18 +29,20 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
   Widget build(BuildContext context) {
     bool isNew = guest != null && guest.id != null ? false : true;
     guest = guest ?? Guest();
-    address = guest.id != null && guest.addresses != null && guest.addresses != "" ? Address.fromJson(jsonDecode(guest.addresses))
-        : Address();
+    address =
+        guest.id != null && guest.addresses != null && guest.addresses != ""
+            ? Address.fromJson(jsonDecode(guest.addresses))
+            : Address();
     return Scaffold(
         backgroundColor: Colors.white.withOpacity(0),
         body: Center(
           child: Container(
-            height: hp(910 * 100 / 1080),
-            width: wp(1100 * 100 / 1920),
+            height: hp(910),
+            width: wp(1100),
             child: Column(
               children: <Widget>[
                 Container(
-                  height: hp(80 * 100 / 1080),
+                  height: hp(80),
                   decoration: BoxDecoration(
                       color: ColorUtils.dialogHeader,
                       borderRadius: BorderRadius.only(
@@ -48,26 +50,25 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                           topRight: Radius.circular(border))),
                   child: Padding(
                     padding: EdgeInsets.only(
-                        left: wp(23.5 * 100 / 1920),
-                        top: hp(10.5 * 100 / 1080),
-                        bottom: hp(8.5 * 100 / 1080),
-                        right: hp(20 * 100 / 1080)),
+                        left: wp(23.5),
+                        top: hp(10.5),
+                        bottom: hp(8.5),
+                        right: hp(20)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
-                          height: hp(61 * 100 / 1080),
-                          width: wp(104 * 100 / 1920),
+                          height: hp(61),
+                          width: wp(104),
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(hp(2 * 100 / 1080)),
+                              borderRadius: BorderRadius.circular(hp(2)),
                               border:
                                   Border.all(color: ColorUtils.cancelBorder)),
                           child: IconButton(
                             icon: Icon(
                               Icons.clear,
                               color: Colors.white,
-                              size: hp(36 * 100 / 1080),
+                              size: hp(36),
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -75,12 +76,11 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                           ),
                         ),
                         Container(
-                          height: hp(61 * 100 / 1080),
-                          width: wp(164 * 100 / 1920),
+                          height: hp(61),
+                          width: wp(164),
                           decoration: BoxDecoration(
                               color: ColorUtils.doneButton,
-                              borderRadius:
-                                  BorderRadius.circular(hp(8 * 100 / 1080))),
+                              borderRadius: BorderRadius.circular(hp(8))),
                           child: Center(
                               child: InkWell(
                                   onTap: () {
@@ -107,9 +107,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                       child: SingleChildScrollView(
                         child: Container(
                           padding: EdgeInsets.only(
-                              right: wp(90 * 100 / 1920),
-                              left: wp(90 * 100 / 1920),
-                              top: hp(47 * 100 / 1080)),
+                              right: wp(90), left: wp(90), top: hp(47)),
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -120,7 +118,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                 ),
                               ),
                               SizedBox(
-                                height: hp(24 * 100 / 1080),
+                                height: hp(24),
                               ),
                               Container(
                                 child: Column(
@@ -130,7 +128,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                           "Guest Information".toUpperCase())
                                     ]),
                                     SizedBox(
-                                      height: hp(7.22 * 100 / 1080),
+                                      height: hp(7.22),
                                     ),
                                     Row(
                                       children: <Widget>[
@@ -143,7 +141,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               }, "FirstName",
                                                   defaultText: guest.firstName),
                                               SizedBox(
-                                                height: hp(16.5 * 100 / 1080),
+                                                height: hp(16.5),
                                               ),
                                               customInputSameHint(
                                                   (dynamic email) {
@@ -154,7 +152,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: wp(47 * 100 / 1920),
+                                          width: wp(47),
                                         ),
                                         Expanded(
                                           child: Column(
@@ -165,7 +163,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                               }, "Last Name",
                                                   defaultText: guest.lastName),
                                               SizedBox(
-                                                height: hp(16.5 * 100 / 1080),
+                                                height: hp(16.5),
                                               ),
                                               customInputPhoneNumber(
                                                   (dynamic phone) {
@@ -180,7 +178,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                 ),
                               ),
                               SizedBox(
-                                height: hp(11.5 * 100 / 1080),
+                                height: hp(11.5),
                               ),
                               Container(
                                 child: Column(
@@ -189,7 +187,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                       areaTitle("Address".toUpperCase())
                                     ]),
                                     SizedBox(
-                                      height: hp(7.22 * 100 / 1080),
+                                      height: hp(7.22),
                                     ),
                                     isNew
                                         ? Column(
@@ -204,7 +202,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                           defaultText:
                                                               address.address)),
                                                   SizedBox(
-                                                    width: wp(47 * 100 / 1920),
+                                                    width: wp(47),
                                                   ),
                                                   Expanded(
                                                       child: customInputDetailHint(
@@ -218,7 +216,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: hp(16.5 * 100 / 1080),
+                                                height: hp(16.5),
                                               ),
                                               Row(
                                                 children: <Widget>[
@@ -233,7 +231,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                                   address
                                                                       .city)),
                                                   SizedBox(
-                                                    width: wp(23 * 100 / 1920),
+                                                    width: wp(23),
                                                   ),
                                                   Expanded(
                                                       child:
@@ -246,7 +244,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                                                   address
                                                                       .state)),
                                                   SizedBox(
-                                                    width: wp(23 * 100 / 1920),
+                                                    width: wp(23),
                                                   ),
                                                   Expanded(
                                                       child:
@@ -263,10 +261,9 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                             ],
                                           )
                                         : Container(
-                                            height: hp(190 * 100 / 1080),
+                                            height: hp(190),
                                             padding: EdgeInsets.only(
-                                                bottom: hp(32 * 100 / 1080),
-                                                right: 2.0),
+                                                bottom: hp(32), right: 2.0),
                                             child: Row(
                                               children: <Widget>[
                                                 Expanded(
@@ -291,7 +288,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                 ),
                               ),
                               SizedBox(
-                                height: hp(11.5 * 100 / 1080),
+                                height: hp(11.5),
                               ),
                               Container(
                                 child: Column(
@@ -301,7 +298,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                           "Other Information".toUpperCase())
                                     ]),
                                     SizedBox(
-                                      height: hp(7.22 * 100 / 1080),
+                                      height: hp(7.22),
                                     ),
                                     Row(
                                       children: <Widget>[
@@ -320,7 +317,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                           }),
                                         ),
                                         SizedBox(
-                                          width: wp(47 * 100 / 1920),
+                                          width: wp(47),
                                         ),
                                         Expanded(
                                           child: customInputDatePicker(
@@ -340,7 +337,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: hp(16.5 * 100 / 1080),
+                                      height: hp(16.5),
                                     ),
                                     Container(
                                       child: Row(
@@ -362,7 +359,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                                 ),
                               ),
                               SizedBox(
-                                height: hp(47 * 100 / 1080),
+                                height: hp(47),
                               )
                             ],
                           ),

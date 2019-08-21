@@ -41,7 +41,8 @@ class _GuestScreenState extends State<GuestScreen> {
           });
         },
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: hp(7.0), vertical: wp(4.0)),
+          padding:
+              EdgeInsets.symmetric(horizontal: hp(134.4), vertical: wp(76.8)),
           child: Column(
             children: <Widget>[
               Container(
@@ -56,7 +57,7 @@ class _GuestScreenState extends State<GuestScreen> {
                     ),
                   ),
                   Container(
-                    height: hp(60 * 100 / 1080),
+                    height: hp(60),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
@@ -81,7 +82,7 @@ class _GuestScreenState extends State<GuestScreen> {
                             child: Text(
                               "+ ADD NEW GUEST",
                               style: TextStyle(
-                                  fontSize: hp(23.76 * 100 / 1080),
+                                  fontSize: hp(23.76),
                                   color: Colors.white,
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600),
@@ -94,10 +95,10 @@ class _GuestScreenState extends State<GuestScreen> {
                 ],
               )),
               SizedBox(
-                height: hp(32.4 * 100 / 1080),
+                height: hp(32.4),
               ),
               Container(
-                height: hp(70.2 * 100 / 1080),
+                height: hp(70.2),
                 child: Row(
                   children: <Widget>[
                     customHeader("NAME"),
