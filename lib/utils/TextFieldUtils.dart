@@ -4,12 +4,13 @@ import 'FontUtils.dart';
 import 'ScreenUtils.dart';
 import 'package:bloc_concept/utils/country_picker_utils/CustomCountryPicker.dart';
 
-TextField customTextField(Function(String) onTap, String hint, [String text]) {
+TextField customTextField(Function(String) onTap, String hint,
+    {String guestInfo, String phoneCode}) {
   var controller = TextEditingController();
-  if (text != null) controller.text = text;
+  if (guestInfo != null) controller.text = guestInfo;
   return TextField(
     onChanged: (text) {
-      onTap(text);
+      onTap(phoneCode + text);
     },
     style: customTextStyle(19, Colors.black, Weight.bold),
     controller: controller,
@@ -21,7 +22,8 @@ TextField customTextField(Function(String) onTap, String hint, [String text]) {
   );
 }
 
-Widget phoneTextField(Function(String) onTap, [String text]) {
+Widget phoneTextField({Function(String) onTap, String guestInfo}) {
+  String phoneCode = "";
   return Row(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: <Widget>[
@@ -36,7 +38,7 @@ Widget phoneTextField(Function(String) onTap, [String text]) {
           initialValue: 'us',
           itemBuilder: _buildDropdownItem,
           onValuePicked: (Country country) {
-            print("${country.name}");
+            phoneCode = country.phoneCode;
           },
         ),
       ),
@@ -44,7 +46,8 @@ Widget phoneTextField(Function(String) onTap, [String text]) {
         child: Center(
           child: Padding(
             padding: EdgeInsets.only(left: wp(15.7)),
-            child: customTextField(onTap, "(XXX) XXX XXXX", text),
+            child: customTextField(onTap, "(XXX) XXX XXXX",
+                guestInfo: guestInfo, phoneCode: phoneCode),
           ),
         ),
       ),

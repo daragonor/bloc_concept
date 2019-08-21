@@ -16,8 +16,6 @@ class GuestsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     bool selected = idx != selectedRow;
     var address = Address.fromJson(jsonDecode(guest.addresses)[0]);
-    //TODO
-    //var address = jsonDecode(guest.addresses)[0]??Address()
     return Container(
       decoration: BoxDecoration(
         color: selected ? Colors.white : ColorUtils.accent,

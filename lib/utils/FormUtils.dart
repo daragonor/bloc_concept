@@ -45,7 +45,7 @@ Widget customInputDetailHint(
     String guestInfo,
     double height = 61}) {
   final field = guestInfo != ""
-      ? customTextField(onTap, "$detail", guestInfo)
+      ? customTextField(onTap, "$detail", guestInfo: guestInfo)
       : customTextField(onTap, "$detail");
 
   return customInput(title: title, input: field, height: height);
@@ -59,8 +59,8 @@ Widget customInputSameHint(
 
 Widget customInputPhoneNumber({Function(dynamic) onTap, String guestInfo}) {
   final field = guestInfo != ""
-      ? phoneTextField(onTap, guestInfo)
-      : phoneTextField(onTap);
+      ? phoneTextField(onTap: onTap, guestInfo: guestInfo)
+      : phoneTextField(onTap: onTap);
   return customInput(title: "PHONE NUMBER", input: field);
 }
 
@@ -98,7 +98,7 @@ Widget customInputDatePicker({String title, String defaultDate, bool changed,
                           var picked = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime(2018),
+                            firstDate: DateTime(1996),
                             lastDate: DateTime(2030),
                             builder: (BuildContext context, Widget child) {
                               return Theme(

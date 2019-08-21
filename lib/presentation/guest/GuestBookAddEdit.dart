@@ -84,6 +84,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                           icon: Icon(Icons.clear,
                               color: Colors.white, size: hp(36)),
                           onPressed: () {
+                            guestBloc.getData();
                             Navigator.pop(context);
                           },
                         ),
@@ -105,6 +106,7 @@ class _GuestBookAddEdit extends State<GuestBookAddEdit> {
                               } else {
                                 guest.addresses = json.encode(addresses);
                                 updateGuest(guest).then((_) {
+                                  guestBloc.getData();
                                   Navigator.pop(context);
                                 });
                               }

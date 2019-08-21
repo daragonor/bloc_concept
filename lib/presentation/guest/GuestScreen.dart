@@ -16,17 +16,8 @@ class _GuestScreenState extends State<GuestScreen> {
   @override
   void initState() {
     super.initState();
-    //getData();
     guestBloc.getData();
   }
-
-  /*  getData() async {
-    var tempguests = await queryGuests();
-    setState(() {
-      guests = tempguests;
-    });
-  } */
-
   @override
   Widget build(BuildContext context) {
     hp = ScreenUtils(MediaQuery.of(context).size).hp;
